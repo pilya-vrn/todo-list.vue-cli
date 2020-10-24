@@ -1,14 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+<script>
+// import CreateTask from '@/components/CreateTask.vue';
+// import CreateList from '@/components/CreateList.vue';
+// import Task from '@/components/Task.vue';
+// import TaskList from '@/components/TaskList.vue';
+
+export default {
+  name: 'App',
+  components: { },
+
+};
+</script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
