@@ -4,10 +4,6 @@
   </div>
 </template>
 <script>
-// import CreateTask from '@/components/CreateTask.vue';
-// import CreateList from '@/components/CreateList.vue';
-// import Task from '@/components/Task.vue';
-// import TaskList from '@/components/TaskList.vue';
 
 export default {
   name: 'App',

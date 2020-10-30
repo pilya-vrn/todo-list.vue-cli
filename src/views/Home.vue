@@ -1,42 +1,63 @@
 <template>
   <div class="home">
      <div style="width: 400px; margin: auto">
-       <h2>Список задач</h2>
-          <div>
-            <div>
-              <CreateTask v-on:create="add_task($event)" />
-              <Task v-for="(task, index) in tasks" v-bind:key="index"
-              v-bind:title="task.text" v-bind:checked="task.checked"
-              v-on:delete="deleteTask(index)" />
-            </div>
-          </div>
+
+              <CreateList
+              @createList="createList($event)"
+              v-if="showForm"
+              @close="showForm = false" />
+
+              <TasksList
+              v-for="(list, index) in lists"
+              v-bind:key="index"
+              v-bind:title="list.title"
+              v-bind:tasks="list.tasks"
+              @remove="deleteList(index, $event)"
+              @create="createTask(index, $event)"
+              v-bind:indexList="index"
+              @delete="deleteTask(index)" />
+
+              <button @click="showForm = true">Добавить новый лист</button>
       </div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from '@/components/HelloWorld.vue';
-import CreateTask from '@/components/CreateTask.vue';
-import Task from '@/components/Task.vue';
+import CreateList from '@/components/CreateList.vue';
+import TasksList from '@/components/TasksList.vue';
 
 export default {
   name: 'Home',
   components: {
-    CreateTask, Task,
+    CreateList, TasksList,
   },
   data() {
-    return { tasks: [] };
+    return {
+      showForm: false,
+      lists: [],
+    };
   },
   methods: {
     deleteTask(index) {
-      this.tasks.splice(index, 1);
+      const list = this.lists[index];
+      list.tasks.splice(index, 1);
     },
-    add_task(title) {
-      this.tasks.unshift({ text: title, checked: false });
+    createTask(index, title) {
+      const list = this.lists[index];
+      list.tasks.unshift({ title, checked: false });
+    },
+    createList(title) {
+      this.lists.push({
+        title,
+        tasks: [],
+      });
+      this.showForm = false;
+    },
+    deleteList(index) {
+      this.lists.splice(index, 1);
     },
   },
 };
 </script>
 <style scoped>
-
 </style>

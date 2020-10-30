@@ -16,13 +16,11 @@ export default {
       title: '',
     };
   },
-  mounted() {},
   methods: {
     createTask() {
       if (this.title === '') {
         alert('title не должен быть пустым');
       } else {
-      // TODO: add validation, очистка формы
         this.$emit('create', this.title);
         this.title = '';
       }

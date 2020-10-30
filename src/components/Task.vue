@@ -2,8 +2,9 @@
   <div>
             <h3>
               <input type="checkbox" v-model="checked" >
-              <label for="checkbox" v-bind:class="{ 'completed': checked }">{{ checked }}</label>
-              {{title}}
+              <label v-bind:class="{ 'completed': checked }">
+                {{ title }}
+              </label>
               <button v-on:click="deleteTask()">Удалить</button>
             </h3>
   </div>
@@ -13,9 +14,6 @@
 export default {
   name: 'Task',
   props: ['title', 'checked'],
-  // data() {
-  //   return { isActive: true };
-  // },
   methods: {
     deleteTask() {
       this.$emit('delete');
@@ -25,6 +23,7 @@ export default {
 </script>
 
 <style scoped>
+
 .completed {
   background-color: rgb(39, 224, 39);
 }
