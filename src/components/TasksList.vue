@@ -2,17 +2,18 @@
   <div>
     <h2>Название листа: {{ title }}</h2>
     <button @click="deleteList">Удалить лист</button>
-
+<!-- добавить бордер на корневой элемент(див) -->
     <h3>  </h3>
               <CreateTask
-              @create="createTask(index, $event)" />
+              @create="createTask" />
 
               <Task
-              v-for="(task, index) in tasks"
-              v-bind:key="index"
+              v-for="(task, taskIndex) in tasks"
+              v-bind:key="taskIndex"
               v-bind:title="task.title"
               v-bind:checked="task.checked"
-              @delete="deleteTask(index)" />
+              @delete="deleteTask(taskIndex)"
+              @change="onTaskChange(taskIndex)" />
               <h1></h1>
   </div>
 </template>
@@ -26,15 +27,18 @@ export default {
   components: { CreateTask, Task },
   props: ['title', 'tasks'],
   methods: {
-    deleteList(index) {
-      this.$emit('remove', index);
+    deleteList() {
+      this.$emit('remove');
     },
     createTask(title) {
       this.$emit('create', title);
     },
-    deleteTask(index) {
-      this.$emit('delete');
+    deleteTask(taskIndex) {
+      this.$emit('deleteTask', taskIndex);
     },
+    onTaskChange(taskIndex) {
+      this.$emit('taskChange', taskIndex);
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class='modal-mask'>
-    <div class='modal-wrapper'>
+    <div class='modal-wrapper' @click.self="closeModal">
     <form class='modal-container' v-on:submit.prevent="createList(title)">
         <input type="text" placeholder="Название листа"
           v-model="title" >
@@ -25,8 +25,10 @@ export default {
         this.$emit('createList', this.title);
       }
     },
-  },
-
+    closeModal(clickEvent) {
+        this.$emit('closeModal');
+    },
+  }
 };
 </script>
 
