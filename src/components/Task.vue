@@ -19,8 +19,8 @@ export default {
       this.$emit('delete');
     },
     onChange() {
-      this.$emit('change');
-    }
+      this.$emit('change', !this.checked);
+    },
   },
 };
 </script>

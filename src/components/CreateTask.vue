@@ -23,7 +23,6 @@ export default {
       } else {
         this.$emit('create', this.title);
         this.title = '';
-        console.log(this.title);
       }
     },
     onInput(evt) {
