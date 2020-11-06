@@ -43,7 +43,6 @@ export default {
       list.tasks.splice(taskIndex, 1);
     },
     createTask(index, title) {
-      // console.log(title)
       const list = this.lists[index];
       list.tasks.unshift({ title, checked: false });
     },
@@ -64,5 +63,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
+
 </style>

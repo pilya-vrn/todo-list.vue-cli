@@ -19,11 +19,11 @@ export default {
   methods: {
     createTask() {
       if (this.title === '') {
+        // eslint-disable-next-line no-alert
         alert('title не должен быть пустым');
       } else {
         this.$emit('create', this.title);
         this.title = '';
-        console.log(this.title);
       }
     },
     onInput(evt) {
