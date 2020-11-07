@@ -21,14 +21,15 @@ export default {
   },
   methods: {
     createList() {
+      // eslint-disable-next-line no-alert
       if (this.title === '') { alert('title не должен быть пустым'); } else {
         this.$emit('createList', this.title);
       }
     },
-    closeModal(clickEvent) {
-        this.$emit('closeModal');
+    closeModal() {
+      this.$emit('closeModal');
     },
-  }
+  },
 };
 </script>
 

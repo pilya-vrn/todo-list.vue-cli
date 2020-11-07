@@ -38,7 +38,7 @@ export default {
     },
     onTaskChange(taskIndex) {
       this.$emit('taskChange', taskIndex);
-    }
+    },
   },
 };
 </script>
