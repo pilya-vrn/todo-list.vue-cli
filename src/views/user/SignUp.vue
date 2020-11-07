@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <form class="container">
     <h1>Регистрация</h1>
 
     <div class="container signin">
@@ -13,60 +13,57 @@
     <label for="email"><b>Email</b></label>
     <p>
     <input type="email" placeholder="example@gmail.com"
-    name="email" maxlength="33" required @input="onEmailChange">
+    name="email" maxlength="33" required v-model="email">
     <p>
 
     <label for="psw"><b>Введите пароль</b></label>
     <p>
     <input type="password" placeholder="Введите пароль"
-    name="psw" maxlength="33" required>
+    name="psw" maxlength="33" required v-model="psw">
     <p>
 
     <label for="psw-repeat"><b>Повторите пароль</b></label>
     <p>
     <input type="password" placeholder="Повторите пароль"
-    name="psw-repeat" maxlength="33" required>
+    name="psw-repeat" maxlength="33" required v-model="pswRpt">
     <p>
     <hr>
     <button type="submit" class="registerbtn" @click="checkValidity">
       Зарегистрироваться!</button>
-  </div>
+  </form>
 
 </template>
 
 <script>
 export default {
   name: 'SignUp',
+  data() {
+    return {
+      email: '',
+      psw: '',
+      pswRpt: '',
+    };
+  },
   methods: {
     checkValidity() {
-      const inputs = document.querySelectorAll('input');
-      const email = inputs[0];
-      const psw = inputs[1];
-      const pswRpt = inputs[2];
-      if ((psw.value !== pswRpt.value) || (email.value === '')
-      || (psw.value === '') || (pswRpt.value === '')) {
+      const re = /\S+@\S+\.\S+/;
+
+      if (this.psw !== this.pswRpt) {
         // eslint-disable-next-line no-alert
-        alert('Пароли не совпадают или не заполнены поля!');
+        alert('Пароли не совпадают!');
+      } else if ((this.email === '') || (this.psw === '') || (this.pswRpt === '')) {
+        // eslint-disable-next-line no-alert
+        alert('Заполните все  поля!');
+      } else if (!re.test(this.email)) {
+        // eslint-disable-next-line no-alert
+        alert('Введите корректный email');
       } else {
-        // записать данные, перейти на страницу создания тудушек
         // eslint-disable-next-line no-alert
         alert('успешная регистрация!');
       }
-      email.value = '';
-      psw.value = '';
-      pswRpt.value = '';
-    },
-    onEmailChange() {
-      const email = document.querySelectorAll('input')[0];
-      const re = /\S+@\S+\.\S+/;
-      const text = email.value;
-
-      if (!re.test(text)) {
-        email.setCustomValidity('Введите корректный email');
-        email.reportValidity();
-      } else {
-        email.setCustomValidity('');
-      }
+      this.email = '';
+      this.psw = '';
+      this.pswRpt = '';
     },
   },
 };
