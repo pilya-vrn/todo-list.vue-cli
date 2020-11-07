@@ -1,8 +1,8 @@
 <template>
    <div>
-      <form v-on:submit.prevent="createTask()">
+      <form @submit.prevent="createTask()">
         <input type="text" placeholder="Новая задача"
-         v-on:input="onInput" v-bind:value="title" >
+         @input="onInput" v-bind:value="title" >
         <button>Добавить</button>
       </form>
    </div>
@@ -18,10 +18,11 @@ export default {
   },
   methods: {
     createTask() {
-      if (this.title === '') {
+      if (this.title.trim() === '') {
+        // eslint-disable-next-line no-alert
         alert('title не должен быть пустым');
       } else {
-        this.$emit('create', this.title);
+        this.$emit('create', this.title.trim());
         this.title = '';
       }
     },

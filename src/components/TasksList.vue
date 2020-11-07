@@ -45,7 +45,6 @@ export default {
       });
     },
     deleteTask(taskIndex) {
-      // console.log(taskIndex);
       this.$store.commit('deleteTask', {
         taskIndex,
         listId: this.id,
