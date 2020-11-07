@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <form class="container">
     <h1>Вход в систему</h1>
 
     <div class="container signin">
@@ -13,40 +13,49 @@
     <label for="email"><b>Email</b></label>
     <p>
     <input type="email" placeholder="example@gmail.com"
-    name="email" maxlength="33" required @input="onEmailChange">
+    name="email" maxlength="33" required v-model="email" @input="onEmailChange">
     <p>
 
     <label for="psw"><b>Введите пароль</b></label>
     <p>
     <input type="password" placeholder="Введите пароль"
-    name="psw" maxlength="33" required>
+    name="psw" maxlength="33" required v-model="psw">
     <p>
 
     <hr>
-    <button type="submit" class="registerbtn" @click="SignIn">
+    <button type="submit" class="registerbtn" @click="signIn">
       Войти!</button>
-  </div>
+  </form>
 
 </template>
 
 <script>
 export default {
   name: 'SignIn',
+  data() {
+    return {
+      email: '',
+      psw: '',
+    };
+  },
   methods: {
-    SignIn() {
-      const inputs = document.querySelectorAll('input');
-      const email = inputs[0];
-      const psw = inputs[1];
+    signIn() {
+      const re = /\S+@\S+\.\S+/;
 
-      if ((email.value === '') || (psw.value === '')) {
+      if ((this.email === '') || (this.psw === '')) {
         // eslint-disable-next-line no-alert
-        alert('заполните все поля');
+        alert('Заполните все  поля!');
+      } else if (!re.test(this.email)) {
+        // eslint-disable-next-line no-alert
+        alert('Введите корректный email');
       } else {
         // eslint-disable-next-line no-alert
         alert('Добро пожаловать');
       }
-      // проверка логина и пароля
+      this.email = '';
+      this.psw = '';
     },
+    // проверка логина и пароля
   },
 };
 </script>
