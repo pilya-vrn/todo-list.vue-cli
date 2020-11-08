@@ -13,7 +13,7 @@
               v-bind:title="task.title"
               v-bind:checked="task.checked"
               @delete="deleteTask(taskIndex)"
-              @change="onTaskChange(taskIndex)" />
+              @change="onTaskChange(taskIndex, $event)" />
               <h1></h1>
   </div>
 </template>
@@ -25,20 +25,38 @@ import Task from '@/components/Task.vue';
 export default {
   name: 'TasksList',
   components: { CreateTask, Task },
-  props: ['title', 'tasks'],
+  props: ['title', 'id'],
+  computed: {
+    tasks() {
+      return this.$store.state.tasks[this.id];
+    },
+  },
   methods: {
     deleteList() {
-      this.$emit('remove');
+      this.$store.commit('deleteList', {
+        listId: this.id,
+      });
     },
-    createTask(title) {
-      this.$emit('create', title);
+    createTask(taskTitle) {
+      this.$store.commit('createTask', {
+        listId: this.id,
+        taskTitle,
+        checked: false,
+      });
     },
     deleteTask(taskIndex) {
-      this.$emit('deleteTask', taskIndex);
+      this.$store.commit('deleteTask', {
+        taskIndex,
+        listId: this.id,
+      });
     },
-    onTaskChange(taskIndex) {
-      this.$emit('taskChange', taskIndex);
-    }
+    onTaskChange(taskIndex, check) {
+      this.$store.commit('onTaskChange', {
+        taskIndex,
+        listId: this.id,
+        checked: check,
+      });
+    },
   },
 };
 </script>

@@ -5,7 +5,7 @@
               <label v-bind:class="{ 'completed': checked }">
                 {{ title }}
               </label>
-              <button v-on:click="deleteTask()">Удалить</button>
+              <button @click="deleteTask()">Удалить</button>
             </h3>
   </div>
 </template>
@@ -19,8 +19,8 @@ export default {
       this.$emit('delete');
     },
     onChange() {
-      this.$emit('change');
-    }
+      this.$emit('change', !this.checked);
+    },
   },
 };
 </script>
