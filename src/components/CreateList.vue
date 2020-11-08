@@ -1,7 +1,7 @@
 <template>
   <div class='modal-mask'>
     <div class='modal-wrapper' @click.self="closeModal">
-    <form class='modal-container' v-on:submit.prevent="createList(title)">
+    <form class='modal-container' @submit.prevent="createList">
         <input type="text" placeholder="Название листа"
           v-model="title" >
         <button>Создать</button>
@@ -16,19 +16,23 @@ export default {
   data() {
     return {
       title: '',
-      tasks: [],
+      // tasks: [],
     };
   },
   methods: {
     createList() {
-      if (this.title === '') { alert('title не должен быть пустым'); } else {
-        this.$emit('createList', this.title);
+      if (this.title.trim() === '') {
+        // eslint-disable-next-line no-alert
+        alert('title не должен быть пустым');
+      } else {
+        this.$emit('createList', this.title.trim());
+        this.closeModal();
       }
     },
-    closeModal(clickEvent) {
-        this.$emit('closeModal');
+    closeModal() {
+      this.$emit('closeModal');
     },
-  }
+  },
 };
 </script>
 
