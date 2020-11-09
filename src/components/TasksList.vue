@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="brd">
     <h2>Название листа: {{ title }}</h2>
-    <button @click="deleteList">Удалить лист</button>
-<!-- добавить бордер на корневой элемент(див) -->
+    <button @click="deleteList" style="background-color: rgb(202, 58, 58)">Удалить лист</button>
     <h3>  </h3>
               <CreateTask
               @create="createTask" />
@@ -63,4 +62,9 @@ export default {
 
 <style scoped>
 
+.brd {
+    border: 4px double black; /* Параметры границы */
+    background: rgb(145, 228, 214); /* Цвет фона */
+    padding: 5px; /* Поля вокруг текста */
+   }
 </style>
