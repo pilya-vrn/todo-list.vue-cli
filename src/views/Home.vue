@@ -14,6 +14,7 @@
                 v-bind:title="list.title"
                 v-bind:id="list.id"
               />
+              <p></p>
               <button @click="showForm = true">Добавить новый лист</button>
       </div>
   </div>
