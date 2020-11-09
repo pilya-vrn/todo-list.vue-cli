@@ -1,11 +1,11 @@
 <template>
-  <form class="container">
+  <form class="container" @submit="checkValidity">
+    <!-- prevent нужен на submit?? -->
     <h1>Регистрация</h1>
 
     <div class="container signin">
-    <p>Уже зарегистрированны? <a href="#">Войти</a>.</p>
-    <!-- сделать ссылку на страницу входа -->
-  </div>
+    <p>Уже зарегистрированны? <router-link to="signin">Войти</router-link>.</p>
+    </div>
 
     <p>Пожалуйста, заполните поля для регистрации</p>
     <hr>
@@ -28,7 +28,7 @@
     name="psw-repeat" maxlength="33" required v-model="pswRpt">
     <p>
     <hr>
-    <button type="submit" class="registerbtn" @click="checkValidity">
+    <button type="submit" class="registerbtn" >
       Зарегистрироваться!</button>
   </form>
 
