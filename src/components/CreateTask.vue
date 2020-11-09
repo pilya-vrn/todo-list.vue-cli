@@ -24,6 +24,8 @@ export default {
       } else {
         this.$emit('create', this.title.trim());
         this.title = '';
+        // eslint-disable-next-line no-console
+        console.log(this.title);
       }
     },
     onInput(evt) {
