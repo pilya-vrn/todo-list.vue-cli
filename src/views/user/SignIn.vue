@@ -1,11 +1,11 @@
 <template>
-  <form class="container">
+  <form class="container" @submit="signIn">
     <h1>Вход в систему</h1>
 
     <div class="container signin">
-    <p>Незарегистрированны? <a href="#">Зарегистрироваться</a>.</p>
+    <p>Незарегистрированны? <router-link to="signup">Зарегистрироваться</router-link>.</p>
     <!-- сделать ссылку на страницу регистрации-->
-  </div>
+    </div>
 
     <p>Пожалуйста, заполните поля для входа</p>
     <hr>
@@ -13,7 +13,7 @@
     <label for="email"><b>Email</b></label>
     <p>
     <input type="email" placeholder="example@gmail.com"
-    name="email" maxlength="33" required v-model="email" @input="onEmailChange">
+    name="email" maxlength="33" required v-model="email" >
     <p>
 
     <label for="psw"><b>Введите пароль</b></label>
@@ -23,7 +23,7 @@
     <p>
 
     <hr>
-    <button type="submit" class="registerbtn" @click="signIn">
+    <button type="submit" class="registerbtn" >
       Войти!</button>
   </form>
 
