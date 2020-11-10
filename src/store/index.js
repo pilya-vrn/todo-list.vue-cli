@@ -27,12 +27,12 @@ export default new Vuex.Store({
       if (index !== -1) {
         state.lists.splice(index, 1);
       }
+      delete state.tasks[listId];
     },
     deleteTask(state, { listId, taskIndex }) {
       const list = state.tasks[listId];
       list.splice(taskIndex, 1);
     },
-
   },
   actions: {
   },
