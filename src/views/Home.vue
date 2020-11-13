@@ -1,7 +1,8 @@
 <template>
   <div class="home">
      <div style="width: 400px; margin: auto">
-
+       <button style="position: absolute; top: 0; right: 0;">
+       <router-link to="signin">Выйти </router-link></button>
               <CreateList
                 v-if="showForm"
                 @closeModal="showForm = false"
@@ -40,10 +41,10 @@ export default {
     },
   },
   methods: {
-    createList(listTitle) {
-      this.$store.commit('createList', {
-        title: listTitle,
-        id: `id${(new Date()).getTime()}`,
+    createList(title) {
+      this.$store.dispatch('createList', {
+        title,
+        // id: `id${(new Date()).getTime()}`,  айдишник теперь это uid
       });
     },
   },

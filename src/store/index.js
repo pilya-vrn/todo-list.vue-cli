@@ -14,9 +14,9 @@ export default new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
-    createList(state, { title, id }) {
-      state.lists.push({ title, id });
-      Vue.set(state.tasks, id, []);
+    createList(state, { title, listId }) {
+      state.lists.push({ title, listId });
+      // Vue.set(state.tasks, id, []); с записью первой таски инициализируется массив на сервере
     },
     createTask(state, { listId, taskTitle, checked }) {
       const list = state.tasks[listId];
@@ -45,6 +45,8 @@ export default new Vuex.Store({
       // console.log('user');
       // console.log(user);
       const newUser = { id: user.uid };
+      // console.log('user.uid');
+      // console.log(user.uid);
       commit('setUser', newUser);
     },
     async signUserIn({ commit }, { email, psw }) {
@@ -52,7 +54,14 @@ export default new Vuex.Store({
       // console.log('user');
       // console.log(user);
       const newUser = { id: user.uid };
+      // console.log(user.uid);
       commit('setUser', newUser);
+    },
+    async createList({ commit, state }, { title }) {
+      const list = { title };
+      const userId = state.user.id;
+      const data = await firebase.database().ref(`lists/${userId}`).push(list);
+      commit('createList', { title, listId: data.key });
     },
   },
   modules: {

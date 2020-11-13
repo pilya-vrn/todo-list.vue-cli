@@ -4,7 +4,6 @@
 
     <div class="container signin">
     <p>Незарегистрированны? <router-link to="signup">Зарегистрироваться</router-link>.</p>
-    <!-- сделать ссылку на страницу регистрации-->
     </div>
 
     <p>Пожалуйста, заполните поля для входа</p>
@@ -53,7 +52,7 @@ export default {
   methods: {
     signIn() {
       const re = /\S+@\S+\.\S+/;
-
+      // добавить проверку на вы незарегистрированны
       if ((this.email === '') || (this.psw === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните все  поля!');
