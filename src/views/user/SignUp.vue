@@ -1,6 +1,5 @@
 <template>
-  <form class="container" @submit="checkValidity">
-    <!-- prevent нужен на submit?? -->
+  <form class="container" @submit.prevent="signUp">
     <h1>Регистрация</h1>
 
     <div class="container signin">
@@ -44,8 +43,21 @@ export default {
       pswRpt: '',
     };
   },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/');
+      }
+    },
+  },
   methods: {
-    checkValidity() {
+    signUp() {
+      // добавить проверку на уже зарегистрированного пользователя
       const re = /\S+@\S+\.\S+/;
 
       if (this.psw !== this.pswRpt) {
@@ -58,15 +70,39 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-        // eslint-disable-next-line no-alert
-        alert('успешная регистрация!');
+        this.$store.dispatch('signUserUp', {
+          email: this.email,
+          psw: this.psw,
+        });
+
+        this.email = '';
+        this.psw = '';
+        this.pswRpt = '';
       }
-      this.email = '';
-      this.psw = '';
-      this.pswRpt = '';
     },
   },
 };
+// checkValidity() {
+//   const re = /\S+@\S+\.\S+/;
+
+//   if (this.psw !== this.pswRpt) {
+//     // eslint-disable-next-line no-alert
+//     alert('Пароли не совпадают!');
+//   } else if ((this.email === '') || (this.psw === '') || (this.pswRpt === '')) {
+//     // eslint-disable-next-line no-alert
+//     alert('Заполните все  поля!');
+//   } else if (!re.test(this.email)) {
+//     // eslint-disable-next-line no-alert
+//     alert('Введите корректный email');
+//   } else {
+//     // eslint-disable-next-line no-alert
+//     alert('успешная регистрация!');
+//   }
+//   this.email = '';
+//   this.psw = '';
+//   this.pswRpt = '';
+// },
+
 </script>
 
 <style scoped>
