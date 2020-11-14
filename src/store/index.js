@@ -11,17 +11,29 @@ export default new Vuex.Store({
     user: null,
   },
   mutations: {
+    resetStore(state) {
+      state.lists = [];
+      state.tasks = {};
+      state.user = null;
+    },
     setUser(state, payload) {
       state.user = payload;
     },
-    createList(state, { title, listId }) {
-      state.lists.push({ title, listId });
-      // Vue.set(state.tasks, id, []); с записью первой таски инициализируется массив на сервере
+    createList(state, { listId, title }) {
+      state.lists.push({ listId, title });
+      // Vue.set(state.tasks, listId, []);
     },
-    createTask(state, { listId, taskTitle, checked }) {
+    createTask(state, { listId, task }) {
+      console.log(task);
       const list = state.tasks[listId];
-      const task = { title: taskTitle, checked };
-      list.unshift(task);
+
+      if (!list) {
+        Vue.set(state.tasks, listId, [task]);
+      } else {
+        list.push(task);
+      }
+      // const task = { title: taskTitle, checked };
+      // list.unshift(task);
     },
     onTaskChange(state, { listId, taskIndex, checked }) {
       const list = state.tasks[listId];
@@ -40,32 +52,42 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async createTask({ commit, state }, payload) {
+      const userId = state.user.id;
+      const { listId } = payload;
+      const task = { title: payload.taskTitle, checked: payload.checked };
+      const data = await firebase.database().ref(`lists/${userId}/${listId}`).push(task);
+      commit('createTask', { listId, task: { task, id: data.key } });
+    },
     async signUserUp({ commit }, { email, psw }) {
-      const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
-      // console.log('user');
-      // console.log(user);
-      const newUser = { id: user.uid };
-      // console.log('user.uid');
-      // console.log(user.uid);
-      commit('setUser', newUser);
+      try {
+        const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
+        const newUser = { id: user.uid };
+        commit('setUser', newUser);
+      } catch (err) {
+        // eslint-disable-next-line no-alert
+        alert(err.message);
+      }
     },
     async signUserIn({ commit }, { email, psw }) {
-      const { user } = await firebase.auth().signInWithEmailAndPassword(email, psw);
-      // console.log('user');
-      // console.log(user);
-      const newUser = { id: user.uid };
-      // console.log(user.uid);
-      // console.log('newUser');
-      // console.log(newUser);
-      commit('setUser', newUser);
+      try {
+        const { user } = await firebase.auth().signInWithEmailAndPassword(email, psw);
+        const newUser = { id: user.uid };
+        commit('setUser', newUser);
+      } catch (err) {
+        // eslint-disable-next-line no-alert
+        alert(err.message);
+      }
     },
     async createList({ commit, state }, { title }) {
       const list = { title };
       const userId = state.user.id;
-      // console.log('userId');
-      // console.log(userId);
       const data = await firebase.database().ref(`lists/${userId}`).push(list);
-      commit('createList', { title, listId: data.key });
+      commit('createList', { listId: data.key, title });
+    },
+    logUserOut({ commit }) {
+      firebase.auth().signOut();
+      commit('setUser', null);
     },
   },
   modules: {

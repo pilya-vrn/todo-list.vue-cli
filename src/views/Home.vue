@@ -1,7 +1,7 @@
 <template>
   <div class="home">
      <div style="width: 400px; margin: auto">
-       <button style="position: absolute; top: 0; right: 0;">
+       <button style="position: absolute; top: 0; right: 0;" @click="logUserOut">
        <router-link to="signin">Выйти </router-link></button>
               <CreateList
                 v-if="showForm"
@@ -41,11 +41,11 @@ export default {
     },
   },
   methods: {
+    logUserOut() {
+      this.$store.dispatch('logUserOut');
+    },
     createList(title) {
-      this.$store.dispatch('createList', {
-        title,
-        // id: `id${(new Date()).getTime()}`,  айдишник теперь это uid
-      });
+      this.$store.dispatch('createList', { title });
     },
   },
 };

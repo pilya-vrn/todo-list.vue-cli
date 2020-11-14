@@ -18,15 +18,15 @@ new Vue({
       messagingSenderId: '1001267382481',
       appId: '1:1001267382481:web:37dc405dea660bdcc9ddf0',
     });
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     this.$store.dispatch('aoutoSignIn', user);
-    //     this.$store.dispatch('loadLists');
-    //     this.$store.dispatch('loadTasks');
-    //   } else {
-    //     this.$store.commit('resetStore');
-    //   }
-    // });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$store.commit('setUser', user);
+        // this.$store.dispatch('loadLists');
+        // this.$store.dispatch('loadTasks');
+      } else {
+        this.$store.commit('resetStore');
+      }
+    });
     window.firebase = firebase;
   },
   router,

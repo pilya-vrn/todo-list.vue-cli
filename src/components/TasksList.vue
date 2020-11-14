@@ -7,8 +7,8 @@
               @create="createTask" />
 
               <Task
-              v-for="(task, taskIndex) in tasks"
-              v-bind:key="taskIndex"
+              v-for="task in tasks"
+              v-bind:key="task.id"
               v-bind:title="task.title"
               v-bind:checked="task.checked"
               @delete="deleteTask(taskIndex)"
@@ -37,7 +37,7 @@ export default {
       });
     },
     createTask(taskTitle) {
-      this.$store.commit('createTask', {
+      this.$store.dispatch('createTask', {
         listId: this.id,
         taskTitle,
         checked: false,

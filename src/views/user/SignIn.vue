@@ -52,7 +52,7 @@ export default {
   methods: {
     signIn() {
       const re = /\S+@\S+\.\S+/;
-      // добавить проверку на вы незарегистрированны
+
       if ((this.email === '') || (this.psw === '')) {
         // eslint-disable-next-line no-alert
         alert('Заполните все  поля!');
