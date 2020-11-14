@@ -41,7 +41,7 @@ export default new Vuex.Store({
   },
   actions: {
     async signUserUp({ commit }, { email, psw }) {
-      const user = await firebase.auth().createUserWithEmailAndPassword(email, psw);
+      const { user } = await firebase.auth().createUserWithEmailAndPassword(email, psw);
       // console.log('user');
       // console.log(user);
       const newUser = { id: user.uid };
@@ -50,16 +50,20 @@ export default new Vuex.Store({
       commit('setUser', newUser);
     },
     async signUserIn({ commit }, { email, psw }) {
-      const user = await firebase.auth().signInWithEmailAndPassword(email, psw);
+      const { user } = await firebase.auth().signInWithEmailAndPassword(email, psw);
       // console.log('user');
       // console.log(user);
       const newUser = { id: user.uid };
       // console.log(user.uid);
+      // console.log('newUser');
+      // console.log(newUser);
       commit('setUser', newUser);
     },
     async createList({ commit, state }, { title }) {
       const list = { title };
       const userId = state.user.id;
+      // console.log('userId');
+      // console.log(userId);
       const data = await firebase.database().ref(`lists/${userId}`).push(list);
       commit('createList', { title, listId: data.key });
     },
