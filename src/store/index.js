@@ -21,10 +21,11 @@ export default new Vuex.Store({
     },
     createList(state, { listId, title }) {
       state.lists.push({ listId, title });
+      // console.log(state.lists);
       // Vue.set(state.tasks, listId, []);
     },
     createTask(state, { listId, task }) {
-      console.log(task);
+      // console.log(task);
       const list = state.tasks[listId];
 
       if (!list) {
@@ -55,9 +56,10 @@ export default new Vuex.Store({
     async createTask({ commit, state }, payload) {
       const userId = state.user.id;
       const { listId } = payload;
+      // console.log(listId);
       const task = { title: payload.taskTitle, checked: payload.checked };
       const data = await firebase.database().ref(`lists/${userId}/${listId}`).push(task);
-      commit('createTask', { listId, task: { task, id: data.key } });
+      commit('createTask', { listId, task: { id: data.key, task } });
     },
     async signUserUp({ commit }, { email, psw }) {
       try {
@@ -84,6 +86,7 @@ export default new Vuex.Store({
       const userId = state.user.id;
       const data = await firebase.database().ref(`lists/${userId}`).push(list);
       commit('createList', { listId: data.key, title });
+      // console.log(data.key);
     },
     logUserOut({ commit }) {
       firebase.auth().signOut();

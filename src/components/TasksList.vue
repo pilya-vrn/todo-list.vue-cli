@@ -9,7 +9,7 @@
               <Task
               v-for="task in tasks"
               v-bind:key="task.id"
-              v-bind:title="task.title"
+              v-bind:title="task.task.title"
               v-bind:checked="task.checked"
               @delete="deleteTask(taskIndex)"
               @change="onTaskChange(taskIndex, $event)" />
@@ -42,6 +42,7 @@ export default {
         taskTitle,
         checked: false,
       });
+      console.log(this.id);
     },
     deleteTask(taskIndex) {
       this.$store.commit('deleteTask', {

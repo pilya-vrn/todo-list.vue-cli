@@ -11,9 +11,9 @@
 
               <TasksList
                 v-for="list in lists"
-                v-bind:key="list.id"
+                v-bind:key="list.listId"
                 v-bind:title="list.title"
-                v-bind:id="list.id"
+                v-bind:id="list.listId"
               />
               <p></p>
               <button @click="showForm = true">Добавить новый лист</button>
