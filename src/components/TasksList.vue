@@ -42,7 +42,7 @@ export default {
         taskTitle,
         checked: false,
       });
-      console.log(this.id);
+      // console.log(this.id);
     },
     deleteTask(taskIndex) {
       this.$store.commit('deleteTask', {

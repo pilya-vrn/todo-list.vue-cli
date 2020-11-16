@@ -84,6 +84,8 @@ export default new Vuex.Store({
     async createList({ commit, state }, { title }) {
       const list = { title };
       const userId = state.user.id;
+      // console.log('state.user');
+      // console.log(state.user);
       const data = await firebase.database().ref(`lists/${userId}`).push(list);
       commit('createList', { listId: data.key, title });
       // console.log(data.key);
