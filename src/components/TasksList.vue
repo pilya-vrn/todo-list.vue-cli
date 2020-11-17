@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     deleteList() {
-      this.$store.commit('deleteList', {
+      this.$store.dispatch('deleteList', {
         listId: this.id,
       });
     },

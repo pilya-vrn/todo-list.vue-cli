@@ -53,6 +53,16 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async deleteList({ commit, state }, { listId }) {
+      console.log(listId);
+      const userId = state.user.id;
+      // await firebase.database().ref(`lists/${userId}/${listId}`).set(null);
+      await firebase.database().ref(`lists/${userId}/${listId}`).remove();
+      // await firebase.database().ref().update({
+      //   [`lists/${userId}/${listId}`]: null,
+      // });
+      commit('deleteList', { listId });
+    },
     async createTask({ commit, state }, payload) {
       const userId = state.user.id;
       const { listId } = payload;
