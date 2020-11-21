@@ -21,8 +21,8 @@ new Vue({
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.commit('setUser', { id: user.uid });
-        // this.$store.dispatch('loadLists');
-        // this.$store.dispatch('loadTasks');
+        this.$store.dispatch('loadLists');
+        this.$store.dispatch('loadTasks');
       } else {
         this.$store.commit('resetStore');
       }

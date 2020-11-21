@@ -3,7 +3,7 @@
             <h3>
               <input type="checkbox" v-bind:checked="checked" @change="onChange">
               <label v-bind:class="{ 'completed': checked }">
-                {{ title }}
+              {{ title }}
               </label>
               <button @click="deleteTask()">Удалить</button>
             </h3>
@@ -19,6 +19,7 @@ export default {
       this.$emit('delete');
     },
     onChange() {
+      // console.log('gggg');
       this.$emit('change', !this.checked);
     },
   },
