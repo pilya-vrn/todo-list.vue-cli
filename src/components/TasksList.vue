@@ -7,12 +7,13 @@
               @create="createTask" />
 
               <Task
-              v-for="(task, taskIndex) in tasks"
-              v-bind:key="taskIndex"
+              v-for="task in tasks"
+              v-bind:key="task.taskId"
               v-bind:title="task.title"
               v-bind:checked="task.checked"
-              @delete="deleteTask(taskIndex)"
-              @change="onTaskChange(taskIndex, $event)" />
+              :id="task.taskId"
+              @delete="deleteTask(task.taskId)"
+              @change="onTaskChange(task.taskId, $event)" />
               <h1></h1>
   </div>
 </template>
@@ -27,31 +28,35 @@ export default {
   props: ['title', 'id'],
   computed: {
     tasks() {
-      return this.$store.state.tasks[this.id];
+      const tasks = this.$store.state.tasks[this.id];
+      return tasks;
     },
   },
   methods: {
     deleteList() {
-      this.$store.commit('deleteList', {
+      this.$store.dispatch('deleteList', {
         listId: this.id,
       });
     },
     createTask(taskTitle) {
-      this.$store.commit('createTask', {
+      this.$store.dispatch('createTask', {
         listId: this.id,
         taskTitle,
         checked: false,
       });
+      // console.log(this.id);
     },
-    deleteTask(taskIndex) {
-      this.$store.commit('deleteTask', {
-        taskIndex,
+    deleteTask(taskId) {
+      this.$store.dispatch('deleteTask', {
+        taskId,
         listId: this.id,
       });
     },
-    onTaskChange(taskIndex, check) {
-      this.$store.commit('onTaskChange', {
-        taskIndex,
+    onTaskChange(taskId, check) {
+      // console.log('gggg');
+      this.$store.dispatch('onTaskChange', {
+
+        taskId,
         listId: this.id,
         checked: check,
       });
