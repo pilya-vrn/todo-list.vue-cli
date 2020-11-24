@@ -1,10 +1,9 @@
 <template>
-  <form class="container" @submit="signIn">
+  <form class="container" @submit.prevent="signIn">
     <h1>Вход в систему</h1>
 
     <div class="container signin">
     <p>Незарегистрированны? <router-link to="signup">Зарегистрироваться</router-link>.</p>
-    <!-- сделать ссылку на страницу регистрации-->
     </div>
 
     <p>Пожалуйста, заполните поля для входа</p>
@@ -38,6 +37,18 @@ export default {
       psw: '',
     };
   },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/');
+      }
+    },
+  },
   methods: {
     signIn() {
       const re = /\S+@\S+\.\S+/;
@@ -49,13 +60,14 @@ export default {
         // eslint-disable-next-line no-alert
         alert('Введите корректный email');
       } else {
-        // eslint-disable-next-line no-alert
-        alert('Добро пожаловать');
+        this.$store.dispatch('signUserIn', {
+          email: this.email,
+          psw: this.psw,
+        });
+        this.email = '';
+        this.psw = '';
       }
-      this.email = '';
-      this.psw = '';
     },
-    // проверка логина и пароля
   },
 };
 </script>

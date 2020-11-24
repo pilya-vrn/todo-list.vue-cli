@@ -1,7 +1,8 @@
 <template>
   <div class="home">
      <div style="width: 400px; margin: auto">
-
+       <button style="position: absolute; top: 0; right: 0;" @click="logUserOut">
+       <router-link to="signin">Выйти </router-link></button>
               <CreateList
                 v-if="showForm"
                 @closeModal="showForm = false"
@@ -10,9 +11,9 @@
 
               <TasksList
                 v-for="list in lists"
-                v-bind:key="list.id"
+                v-bind:key="list.listId"
                 v-bind:title="list.title"
-                v-bind:id="list.id"
+                v-bind:id="list.listId"
               />
               <p></p>
               <button @click="showForm = true">Добавить новый лист</button>
@@ -40,11 +41,11 @@ export default {
     },
   },
   methods: {
-    createList(listTitle) {
-      this.$store.commit('createList', {
-        title: listTitle,
-        id: `id${(new Date()).getTime()}`,
-      });
+    logUserOut() {
+      this.$store.dispatch('logUserOut');
+    },
+    createList(title) {
+      this.$store.dispatch('createList', { title });
     },
   },
 };
